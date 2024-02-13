@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Genders {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum StatusTrips {
+  PENDING
+  SUCCESS
+  DELETE
+}
+
+enum StatusJoins {
+  PENDING
+  ACCEPT
+  REJECT
+  CANCLE
+}
+
+model User {
+  id                Int     @id @default(autoincrement())
+  email             String  @unique
+  password          String
+  firstName         String  @map("first_name")
+  lastName          String  @map("last_name")
+  foodAllergies     String? @map("food_allergies")
+  congenitalDisease String? @map("congenital_disease")
+  gender            Genders @default(OTHER)
+  mobile            String? @unique
+  nameEmergency     String  @map("name_emergency")
+  mobileEmergency   String  @unique @map("mobile_emergency")
+  trips             Trip[]
+  joins             Join[]
+
+  @@map("users")
+}
+
+model Trip {
+  id           Int         @id @default(autoincrement())
+  title        String
+  description  String
+  location     String
+  createdAT    DateTime    @default(now()) @map("create_at") @db.Timestamp(0)
+  startDate    DateTime    @map("start_date")
+  endDate      DateTime    @map("end_date")
+  image        String?
+  meetingPlace String      @map("meeting_place")
+  numPeople    String      @map("num_people")
+  statusTrip   StatusTrips @default(PENDING)
+  User         User?       @relation(fields: [userId], references: [id])
+  userId       Int?
+  joins        Join[]
+
+  @@map("trips")
+}
+
+model Join {
+  id         Int         @id @default(autoincrement())
+  nameJoin   String      @map("name_join")
+  peopleJoin String      @map("people_join")
+  statusJoin StatusJoins @default(PENDING)
+  User       User?       @relation(fields: [userId], references: [id])
+  userId     Int?
+  Trip       Trip?       @relation(fields: [tripId], references: [id])
+  tripId     Int?
+
+  @@map("joins")
+}
