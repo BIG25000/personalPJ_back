@@ -8,6 +8,9 @@ const limiter = require("./middlewares/rate-limit");
 const error = require("./middlewares/error");
 const notFound = require("./middlewares/not-found");
 const authRoute = require("./routes/auth-route");
+const guestRoute = require("./routes/guest-route");
+const tripRoute = require("./routes/trip-route");
+const authenticate = require("./middlewares/authenticate");
 
 const app = express();
 
@@ -17,6 +20,8 @@ app.use(limiter);
 app.use(morgan("dev"));
 
 app.use("/auth", authRoute);
+app.use("/guest", guestRoute);
+app.use("/trip", authenticate, tripRoute);
 
 app.use(notFound);
 app.use(error);
