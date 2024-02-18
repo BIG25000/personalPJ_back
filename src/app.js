@@ -18,10 +18,11 @@ app.use(cors());
 app.use(express.json());
 app.use(limiter);
 app.use(morgan("dev"));
+app.use("/public", express.static("public"));
 
 app.use("/auth", authRoute);
 app.use("/guest", guestRoute);
-app.use("/trip", authenticate, tripRoute);
+app.use("/trips", authenticate, tripRoute);
 
 app.use(notFound);
 app.use(error);

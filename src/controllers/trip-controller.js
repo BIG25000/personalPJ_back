@@ -1,17 +1,30 @@
 const catchError = require("../utils/catch-error");
 const tripService = require("../services/trip-service");
+const uploadService = require("../services/upload-service");
 
 exports.createTrip = catchError(async (req, res, next) => {
-  const trip = req.body;
-  console.log(trip);
   const startDate = new Date(req.body.startDate);
   const endDate = new Date(req.body.endDate);
-  const tripA = {
-    ...trip,
+  const data = {
     userId: req.user.id,
-    startDate,
-    endDate,
+    title: req.body.title,
+    description: req.body.description,
+    location: req.body.location,
+    startDate: startDate,
+    endDate: endDate,
+    meetingPlace: req.body.meetingPlace,
+    numPeople: req.body.numPeople,
   };
-  const result = await tripService.createTrip(tripA);
-  res.status(200).json({ result });
+
+  if (req.file) {
+    data.image = await uploadService.upload(req.file.path);
+  }
+
+  const trip = await tripService.createTrip(data);
+  res.status(200).json({ trips: trip });
+});
+
+exports.allTrip = catchError(async (req, res, next) => {
+  const sumTrip = await tripService.findAllTrip();
+  res.status(200).json({ sumTrip });
 });
