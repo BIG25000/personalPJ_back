@@ -50,3 +50,9 @@ exports.login = catchError(async (req, res, next) => {
 exports.getMe = (req, res, next) => {
   res.status(200).json({ user: req.user });
 };
+
+exports.getAll = async (req, res, next) => {
+  const result = await userService.findUserAll(req.user.id);
+  console.log(result.trips[0].statusTrip);
+  res.status(200).json({ result });
+};

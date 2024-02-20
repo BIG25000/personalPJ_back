@@ -16,4 +16,6 @@ router.post(
 
 router.get("/allTrip", tripController.allTrip);
 
+router.post("/joins", tripController.createJoin);
+
 module.exports = router;

@@ -19,12 +19,24 @@ exports.createTrip = catchError(async (req, res, next) => {
   if (req.file) {
     data.image = await uploadService.upload(req.file.path);
   }
-
   const trip = await tripService.createTrip(data);
+
   res.status(200).json({ trips: trip });
 });
 
 exports.allTrip = catchError(async (req, res, next) => {
   const sumTrip = await tripService.findAllTrip();
   res.status(200).json({ sumTrip });
+});
+
+exports.createJoin = catchError(async (req, res, next) => {
+  console.log(req.body);
+  const data = {
+    userId: req.user.id,
+    nameJoin: req.body.nameJoin,
+    peopleJoin: req.body.peopleJoin,
+    tripId: req.body.tripId,
+  };
+  const join = await tripService.createJoinTrip(data);
+  res.status(200).json({ join: join });
 });
