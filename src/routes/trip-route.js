@@ -21,4 +21,6 @@ router.post("/joins", tripController.createJoin);
 
 router.get("/history", tripController.hitJoin);
 
+router.get("/historyCreate", tripController.hitCreate);
+
 module.exports = router;

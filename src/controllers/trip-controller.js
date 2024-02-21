@@ -44,10 +44,12 @@ exports.createJoin = catchError(async (req, res, next) => {
 
 exports.hitJoin = async (req, res, next) => {
   const data = await execute(
-    `SELECT 
+    `SELECT
+    j.userId,
     t.title,
     t.start_date,
     t.end_date,
+    t.statusTrip,
     j.statusJoin,
     j.name_join,
     j.people_join
@@ -57,6 +59,24 @@ FROM
     trips t ON u.id = t.userId
         JOIN
     joins j ON t.id = j.tripId;`
+  );
+  res.status(200).json({ data: data });
+};
+
+exports.hitCreate = async (req, res, next) => {
+  const data = await execute(
+    `SELECT 
+    t.userId,
+    t.title,
+    t.start_date,
+    t.end_date,
+    t.statusTrip,
+    t.num_people,
+    t.location
+FROM
+    users u
+        JOIN
+    trips t ON u.id = t.userId;`
   );
   res.status(200).json({ data: data });
 };
