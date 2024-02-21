@@ -44,21 +44,22 @@ exports.createJoin = catchError(async (req, res, next) => {
 exports.hitJoin = async (req, res, next) => {
   const data = await execute(
     `SELECT
-    j.id,
-    j.userId,
-    t.title,
-    t.start_date,
-    t.end_date,
-    t.statusTrip,
-    j.statusJoin,
-    j.name_join,
-    j.people_join
-FROM
-    users u
-        JOIN
-    trips t ON u.id = t.userId
-        JOIN
-    joins j ON t.id = j.tripId;`
+    t.id tripId,
+      j.id,
+      j.userId,
+      t.title,
+      t.start_date,
+      t.end_date,
+      t.statusTrip,
+      j.statusJoin,
+      j.name_join,
+      j.people_join
+  FROM
+      users u
+          JOIN
+      trips t ON u.id = t.userId
+          JOIN
+      joins j ON t.id = j.tripId;;`
   );
   res.status(200).json({ data: data });
 };
