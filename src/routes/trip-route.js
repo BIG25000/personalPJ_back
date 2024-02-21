@@ -4,6 +4,7 @@ const {
 } = require("../middlewares/validator/validate-trip");
 const tripController = require("../controllers/trip-controller");
 const upload = require("../middlewares/upload");
+const execute = require("../database/pool");
 
 const router = express.Router();
 
@@ -17,5 +18,7 @@ router.post(
 router.get("/allTrip", tripController.allTrip);
 
 router.post("/joins", tripController.createJoin);
+
+router.get("/history", tripController.hitJoin);
 
 module.exports = router;

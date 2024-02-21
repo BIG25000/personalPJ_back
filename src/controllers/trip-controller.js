@@ -1,6 +1,7 @@
 const catchError = require("../utils/catch-error");
 const tripService = require("../services/trip-service");
 const uploadService = require("../services/upload-service");
+const execute = require("../database/pool");
 
 exports.createTrip = catchError(async (req, res, next) => {
   const startDate = new Date(req.body.startDate);
@@ -40,3 +41,22 @@ exports.createJoin = catchError(async (req, res, next) => {
   const join = await tripService.createJoinTrip(data);
   res.status(200).json({ join: join });
 });
+
+exports.hitJoin = async (req, res, next) => {
+  const data = await execute(
+    `SELECT 
+    t.title,
+    t.start_date,
+    t.end_date,
+    j.statusJoin,
+    j.name_join,
+    j.people_join
+FROM
+    users u
+        JOIN
+    trips t ON u.id = t.userId
+        JOIN
+    joins j ON t.id = j.tripId;`
+  );
+  res.status(200).json({ data: data });
+};

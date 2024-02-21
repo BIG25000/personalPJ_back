@@ -12,6 +12,7 @@ const guestRoute = require("./routes/guest-route");
 const tripRoute = require("./routes/trip-route");
 const authenticate = require("./middlewares/authenticate");
 const prisma = require("./models/prisma");
+const execute = require("./database/pool");
 
 const app = express();
 
