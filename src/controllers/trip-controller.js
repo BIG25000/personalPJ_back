@@ -31,7 +31,6 @@ exports.allTrip = catchError(async (req, res, next) => {
 });
 
 exports.createJoin = catchError(async (req, res, next) => {
-  console.log(req.body);
   const data = {
     userId: req.user.id,
     nameJoin: req.body.nameJoin,
@@ -45,6 +44,7 @@ exports.createJoin = catchError(async (req, res, next) => {
 exports.hitJoin = async (req, res, next) => {
   const data = await execute(
     `SELECT
+    j.id,
     j.userId,
     t.title,
     t.start_date,
@@ -66,6 +66,7 @@ FROM
 exports.hitCreate = async (req, res, next) => {
   const data = await execute(
     `SELECT 
+    t.id,
     t.userId,
     t.title,
     t.start_date,
@@ -80,3 +81,14 @@ FROM
   );
   res.status(200).json({ data: data });
 };
+
+exports.deleteJoin = catchError(async (req, res, next) => {
+  console.log("****************", req.params);
+  await tripService.deleteJoinTrip(+req.params.joinId);
+  res.status(204).json();
+});
+
+exports.deleteCreate = catchError(async (req, res, next) => {
+  await tripService.deleteCreateTrip(+req.params.tripId);
+  res.status(204).json();
+});
