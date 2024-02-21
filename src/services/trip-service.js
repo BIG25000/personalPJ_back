@@ -9,3 +9,9 @@ exports.createJoinTrip = (data) => prisma.join.create({ data });
 exports.deleteJoinTrip = (id) => prisma.join.delete({ where: { id } });
 
 exports.deleteCreateTrip = (id) => prisma.trip.delete({ where: { id } });
+
+exports.editTrip = (data, id) =>
+  prisma.trip.update({
+    data: data,
+    where: { id: +id },
+  });

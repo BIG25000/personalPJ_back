@@ -84,7 +84,7 @@ FROM
 };
 
 exports.deleteJoin = catchError(async (req, res, next) => {
-  console.log("****************", req.params);
+  // console.log("****************", req.params);
   await tripService.deleteJoinTrip(+req.params.joinId);
   res.status(204).json();
 });
@@ -92,4 +92,10 @@ exports.deleteJoin = catchError(async (req, res, next) => {
 exports.deleteCreate = catchError(async (req, res, next) => {
   await tripService.deleteCreateTrip(+req.params.tripId);
   res.status(204).json();
+});
+
+exports.editTrip = catchError(async (req, res, next) => {
+  console.log(req.body, req.params.tripId);
+  const result = await tripService.editTrip(req.body, req.params.tripId);
+  res.status(200).json({ message: result });
 });
