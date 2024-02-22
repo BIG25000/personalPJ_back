@@ -3,10 +3,16 @@ const prisma = require("../models/prisma");
 exports.createTrip = (data) => prisma.trip.create({ data });
 
 exports.findAllTrip = () =>
-  prisma.trip.findMany({ where: { statusTrip: "PENDING" } });
+  prisma.trip.findMany({
+    where: { statusTrip: "PENDING" },
+    orderBy: { startDate: "asc" },
+  });
 
 exports.findAllTrip2 = () =>
-  prisma.trip.findMany({ where: { statusTrip: "SUCCESS" } });
+  prisma.trip.findMany({
+    where: { statusTrip: "SUCCESS" },
+    orderBy: { startDate: "asc" },
+  });
 
 exports.createJoinTrip = (data) => prisma.join.create({ data });
 

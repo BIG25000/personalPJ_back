@@ -109,3 +109,24 @@ exports.getTripById = catchError(async (req, res, next) => {
   const result = await tripService.getById(+req.params.tripId);
   res.status(200).json(result);
 });
+
+exports.getJoinTripAll = async (req, res, next) => {
+  const data = await execute(
+    `SELECT
+    t.location,
+    t.start_date, 
+    t.id,
+        t.title,
+      t.num_people,
+        j.people_join,
+        j.name_join,
+        j.statusJoin
+    FROM
+        trips t
+            JOIN
+        joins j ON t.id = j.tripId where t.id = ?`,
+    [req.params.tripId]
+  );
+
+  res.status(200).json({ data: data });
+};

@@ -14,6 +14,7 @@ router.post(
   validateCreateTrip,
   tripController.createTrip
 );
+router.get("/joinsAll/:tripId", tripController.getJoinTripAll);
 
 router.get("/allTrip", tripController.allTrip);
 
@@ -32,4 +33,5 @@ router.delete("/historyJoin/:joinId", tripController.deleteJoin);
 router.patch("/:tripId", upload.single("image"), tripController.editTrip);
 
 router.get("/:tripId", tripController.getTripById);
+
 module.exports = router;
