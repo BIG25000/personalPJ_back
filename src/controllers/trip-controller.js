@@ -130,3 +130,15 @@ exports.getJoinTripAll = async (req, res, next) => {
 
   res.status(200).json({ data: data });
 };
+
+exports.updateStatusJoin = catchError(async (req, res, next) => {
+  console.log(req.body);
+  const data = await tripService.updateStatusJoin(req.body.id);
+  res.status(200).json({ data });
+});
+
+exports.updateStatusJoin2 = catchError(async (req, res, next) => {
+  console.log(req.body);
+  const data = await tripService.updateStatusJoin2(req.body.id);
+  res.status(200).json({ data });
+});

@@ -27,3 +27,15 @@ exports.editTrip = (data, id) =>
   });
 
 exports.getById = (id) => prisma.trip.findFirst({ where: { id } });
+
+exports.updateStatusJoin = (id) =>
+  prisma.join.update({
+    data: { statusJoin: "ACCEPT" },
+    where: { id: +id },
+  });
+
+exports.updateStatusJoin2 = (id) =>
+  prisma.join.update({
+    data: { statusJoin: "REJECT" },
+    where: { id: +id },
+  });
