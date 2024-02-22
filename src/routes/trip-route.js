@@ -34,8 +34,8 @@ router.patch("/:tripId", upload.single("image"), tripController.editTrip);
 
 router.get("/:tripId", tripController.getTripById);
 
-router.put("/joinsUpdate", tripController.updateStatusJoin);
+router.put("/joinsUpdate/:joinId", tripController.updateStatusJoin);
 
-router.put("/joinsUpdate2", tripController.updateStatusJoin2);
+router.put("/joinsUpdate2/:joinId", tripController.updateStatusJoin2);
 
 module.exports = router;

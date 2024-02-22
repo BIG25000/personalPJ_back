@@ -113,6 +113,7 @@ exports.getTripById = catchError(async (req, res, next) => {
 exports.getJoinTripAll = async (req, res, next) => {
   const data = await execute(
     `SELECT
+    j.id joinId,
     t.location,
     t.start_date, 
     t.id,
@@ -133,12 +134,12 @@ exports.getJoinTripAll = async (req, res, next) => {
 
 exports.updateStatusJoin = catchError(async (req, res, next) => {
   console.log(req.body);
-  const data = await tripService.updateStatusJoin(req.body.id);
+  const data = await tripService.updateStatusJoin(+req.params.joinId);
   res.status(200).json({ data });
 });
 
 exports.updateStatusJoin2 = catchError(async (req, res, next) => {
   console.log(req.body);
-  const data = await tripService.updateStatusJoin2(req.body.id);
+  const data = await tripService.updateStatusJoin2(+req.params.joinIdg);
   res.status(200).json({ data });
 });
