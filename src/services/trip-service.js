@@ -2,7 +2,11 @@ const prisma = require("../models/prisma");
 
 exports.createTrip = (data) => prisma.trip.create({ data });
 
-exports.findAllTrip = () => prisma.trip.findMany({});
+exports.findAllTrip = () =>
+  prisma.trip.findMany({ where: { statusTrip: "PENDING" } });
+
+exports.findAllTrip2 = () =>
+  prisma.trip.findMany({ where: { statusTrip: "SUCCESS" } });
 
 exports.createJoinTrip = (data) => prisma.join.create({ data });
 
@@ -15,3 +19,5 @@ exports.editTrip = (data, id) =>
     data: data,
     where: { id: +id },
   });
+
+exports.getById = (id) => prisma.trip.findFirst({ where: { id } });

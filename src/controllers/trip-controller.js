@@ -30,6 +30,11 @@ exports.allTrip = catchError(async (req, res, next) => {
   res.status(200).json({ sumTrip });
 });
 
+exports.allTrip2 = catchError(async (req, res, next) => {
+  const sumTrip = await tripService.findAllTrip2();
+  res.status(200).json({ sumTrip });
+});
+
 exports.createJoin = catchError(async (req, res, next) => {
   const data = {
     userId: req.user.id,
@@ -98,4 +103,9 @@ exports.editTrip = catchError(async (req, res, next) => {
   console.log(req.body, req.params.tripId);
   const result = await tripService.editTrip(req.body, req.params.tripId);
   res.status(200).json({ message: result });
+});
+
+exports.getTripById = catchError(async (req, res, next) => {
+  const result = await tripService.getById(+req.params.tripId);
+  res.status(200).json(result);
 });
