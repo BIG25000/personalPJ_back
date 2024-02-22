@@ -27,6 +27,6 @@ router.delete("/historyCreate/:tripId", tripController.deleteCreate);
 
 router.delete("/historyJoin/:joinId", tripController.deleteJoin);
 
-router.patch("/:tripId", tripController.editTrip);
+router.patch("/:tripId", upload.single("image"), tripController.editTrip);
 
 module.exports = router;
