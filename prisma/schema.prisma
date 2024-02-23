@@ -50,7 +50,7 @@ model User {
 model Trip {
   id           Int         @id @default(autoincrement())
   title        String
-  description  String
+  description  String      @db.LongText()
   location     String
   createdAT    DateTime    @default(now()) @map("create_at") @db.Timestamp(0)
   startDate    DateTime    @map("start_date")
