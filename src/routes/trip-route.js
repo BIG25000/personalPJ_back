@@ -5,6 +5,12 @@ const {
 const tripController = require("../controllers/trip-controller");
 const upload = require("../middlewares/upload");
 const execute = require("../database/pool");
+const {
+  validateEditTrip,
+} = require("../middlewares/validator/validate-editTrip");
+const {
+  validateJoinTrip,
+} = require("../middlewares/validator/validate-joinTrip");
 
 const router = express.Router();
 
@@ -20,7 +26,7 @@ router.get("/allTrip", tripController.allTrip);
 
 router.get("/allTrip2", tripController.allTrip2);
 
-router.post("/joins", tripController.createJoin);
+router.post("/joins", validateJoinTrip, tripController.createJoin);
 
 router.get("/history", tripController.hitJoin);
 
@@ -30,7 +36,12 @@ router.delete("/historyCreate/:tripId", tripController.deleteCreate);
 
 router.delete("/historyJoin/:joinId", tripController.deleteJoin);
 
-router.patch("/:tripId", upload.single("image"), tripController.editTrip);
+router.patch(
+  "/:tripId",
+  upload.single("image"),
+  validateEditTrip,
+  tripController.editTrip
+);
 
 router.get("/:tripId", tripController.getTripById);
 
